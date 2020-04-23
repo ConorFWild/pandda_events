@@ -20,7 +20,6 @@ class File(type(Path())):
         return super().__new__(cls, *args, **kwargs)
 
 
-
 class PDBFile(File):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,14 +48,37 @@ class PanDDAProcessedDatasetsDir(Dir):
     def from_pandda_dir(pandda_dir: PanDDADir):
         return PanDDAProcessedDatasetsDir(pandda_dir / "processed_datasets")
 
-
-class PanDDAProcessedDatasetDir(Dir):
+class PanDDAModelledStucturesDir(dir):
     def __init__(self, pathlike):
         super().__init__(pathlike)
 
+
+class PanDDAProcessedDatasetDir(Dir):
+    def __init__(self, pathlike, modelled_structures, event_maps, model_path):
+        super().__init__(pathlike)
+        self.modelled_structures = modelled_structures
+        self.event_maps = event_maps
+        self.model_path = model_path
+
     @staticmethod
     def from_path(path):
-        return PanDDAProcessedDatasetDir(path)
+        dtag = path.name
+        modelled_structures = PanDDAModelledStucturesDir(path / "modelled_structures")
+        event_map_paths = list(path.glob("{}-event*".format(dtag)))
+        event_maps_dict = {re.findall("event_([0-9]+)_", str(evnet_map_path))[0]: evnet_map_path
+                           for evnet_map_path
+                           in event_map_paths
+                           }
+        event_maps = {event_idx: PanDDAEventMapPath(event_map_path)
+                      for event_idx, event_map_path
+                      in event_maps_dict.items()
+                      }
+        model_path = PanDDAModelPath(path / "".format("path"))
+        return PanDDAProcessedDatasetDir(path,
+                                         modelled_structures,
+                                         event_maps,
+                                         model_path,
+                                         )
 
 
 class PanDDAAnalysesDir(Dir):
@@ -74,15 +96,13 @@ class PanDDAEventTablePath(File):
         super().__init__(pathlike)
 
 
-
-
 class PanDDAFSModel:
     def __init__(self, pandda_dir: PanDDADir):
         print("pandda dir: {}".format(pandda_dir))
         self.pandda_dir = pandda_dir
         self.analyses_dir = PanDDAAnalysesDir.from_pandda_dir(pandda_dir)
         self.processed_datasets_dir = PanDDAProcessedDatasetsDir.from_pandda_dir(pandda_dir)
-        self.processed_datasets_dirs = {PanDDAProcessedDatasetDir.from_path(path)
+        self.processed_datasets_dirs = {path.name: PanDDAProcessedDatasetDir.from_path(path)
                                         for path
                                         in self.processed_datasets_dir.glob("*")
                                         }
@@ -119,29 +139,40 @@ class PanDDAEventID:
         self.event_idx = event_idx
 
 
-class PanDDAModelPath(File):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class PanDDAModelPath(PDBFile):
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
 
-class PanDDAEventMapPath(File):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class PanDDAEventMapPath(CCP4File):
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
 
 class Event:
-    def __init__(self, dtag, event_idx):
-        self.dtag = PanDDADtag(dtag)
-        self.event_idx = PanDDAEventIdx(event_idx)
-        self.model_path = PanDDAModelPath()
-        self.event_map_path = PanDDAEventMapPath()
+    def __init__(self, dtag, event_idx, event_dir, model_path, event_map_path):
+        self.dtag = dtag
+        self.event_idx = event_idx
+
+        self.event_dir = event_dir
+        self.model_path = model_path
+        self.event_map_path = event_map_path
 
     @staticmethod
-    def from_record(record):
-        dtag = record["dtag"]
-        event_idx = record["event_idx"]
+    def from_record(record, pandda_fs_model: PanDDAFSModel):
+        dtag = PanDDADtag(record["dtag"])
+        event_idx = PanDDAEventIdx(record["event_idx"])
+        event_dir = pandda_fs_model.processed_datasets_dirs[dtag]
 
-        return Event(dtag, event_idx)
+        model_path = event_dir.model_path
+        event_map_path = event_dir.event_maps[event_idx]
+
+        return Event(dtag,
+                     event_idx,
+                     event_dir,
+                     model_path,
+                     event_map_path,
+                     )
 
 
 class Command:
