@@ -7,8 +7,8 @@ import pandas as pd
 class Dir(type(Path())):
     # def __new__(cls, pathlike):
     #     super().__new__(cls, pathlike)
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args)
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
 
 class File(type(Path())):
