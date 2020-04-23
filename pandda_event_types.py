@@ -9,14 +9,13 @@ class Dir(type(Path())):
         return super().__new__(cls, *args, **kwargs)
 
     def __init__(self, pathlike):
-        print(type(super()))
         super().__init__()
-    # pass
 
 
 class File(type(Path())):
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args)
+    def __init__(self, pathlike):
+        super().__init__()
+        
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls, *args, **kwargs)
 
