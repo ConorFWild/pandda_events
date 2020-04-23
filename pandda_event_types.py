@@ -213,5 +213,5 @@ class PanDDAEventTable(pd.DataFrame):
 
     @staticmethod
     def from_pandda_event_table_path(path: PanDDAEventTablePath):
-        table = pd.read_csb(str(path))
+        table = pd.read_csv(str(path))
         return PanDDAEventTable(table)
