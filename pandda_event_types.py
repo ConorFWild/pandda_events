@@ -6,12 +6,12 @@ import pandas as pd
 
 class Dir(Path):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args)
 
 
 class File(Path):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args)
 
 
 class PDBFile(File):
