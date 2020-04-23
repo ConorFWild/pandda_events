@@ -4,14 +4,14 @@ from pathlib import Path
 import pandas as pd
 
 
-class Dir(Path):
+class Dir(type(Path())):
     def __new__(cls, pathlike):
         super().__new__(cls, pathlike)
     def __init__(self, *args, **kwargs):
         super().__init__(*args)
 
 
-class File(Path):
+class File(type(Path())):
     def __init__(self, *args, **kwargs):
         super().__init__(*args)
 
