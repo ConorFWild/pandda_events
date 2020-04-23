@@ -5,6 +5,8 @@ import pandas as pd
 
 
 class Dir(Path):
+    def __new__(cls, pathlike):
+        super().__new__(cls, pathlike)
     def __init__(self, *args, **kwargs):
         super().__init__(*args)
 
