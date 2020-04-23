@@ -13,8 +13,10 @@ class Dir(type(Path())):
 
 
 class File(type(Path())):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args)
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args)
+    def __new__(cls, pathlike):
+        super().__new__(cls, pathlike)
 
 
 class PDBFile(File):
