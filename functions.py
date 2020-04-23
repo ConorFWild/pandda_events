@@ -26,7 +26,7 @@ def get_event_rscc(event: pandda_event_types.Event):
 
 
 def get_pandda_events(pandda_fs_model: pandda_event_types.PanDDAFSModel):
-    pandda_events_table = pandda_event_types.PanDDAEventTable(pandda_fs_model.analyses_dir.pandda_event_table_path)
+    pandda_events_table = pandda_event_types.PanDDAEventTable.from_pandda_event_table_path(pandda_fs_model.analyses_dir.pandda_event_table_path)
 
     events = {}
     for index, row in pandda_events_table.iterrows():
