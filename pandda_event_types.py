@@ -78,7 +78,8 @@ class PanDDAProcessedDatasetDir(Dir):
                           }
         else:
             event_maps = {}
-        model_path = PanDDAModelPath(path / "".format("path"))
+        model_path = PanDDAModelPath(path / "{}-pandda-input.pdb".format(dtag))
+        
         return PanDDAProcessedDatasetDir(path,
                                          modelled_structures,
                                          event_maps,
