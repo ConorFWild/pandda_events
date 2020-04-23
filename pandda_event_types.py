@@ -50,8 +50,8 @@ class PanDDAProcessedDatasetDir(Dir):
 
 
 class PanDDAAnalysesDir(Dir):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
     @staticmethod
     def from_pandda_dir(pandda_dir: PanDDADir):
@@ -65,6 +65,7 @@ class PanDDAEventTablePath(File):
 
 class PanDDAFSModel:
     def __init__(self, pandda_dir: PanDDADir):
+        print("pandda dir: {}".format(pandda_dir))
         self.pandda_dir = pandda_dir
         self.analyses_dir = PanDDAAnalysesDir.from_pandda_dir(pandda_dir)
         self.processed_datasets_dir = PanDDAProcessedDatasetsDir.from_pandda_dir(pandda_dir)
