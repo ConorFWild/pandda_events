@@ -7,9 +7,9 @@ import pandas as pd
 class Dir(type(Path())):
     # def __new__(cls, pathlike):
     #     super().__new__(cls, pathlike)
-    # def __init__(self, pathlike):
-    #     super().__init__(pathlike)
-    pass
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
+    # pass
 
 
 class File(type(Path())):
@@ -43,8 +43,8 @@ class PanDDAProcessedDatasetsDir(Dir):
 
 
 class PanDDAProcessedDatasetDir(Dir):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
 
 class PanDDAAnalysesDir(Dir):
