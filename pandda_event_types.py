@@ -33,8 +33,8 @@ class MTZFile(File):
 
 
 class PanDDADir(Dir):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
 
 
 class PanDDAProcessedDatasetsDir(Dir):
