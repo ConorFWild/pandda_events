@@ -15,7 +15,7 @@ class Dir(type(Path())):
 class File(type(Path())):
     def __init__(self, pathlike):
         super().__init__()
-        
+
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls, *args, **kwargs)
 
@@ -49,6 +49,10 @@ class PanDDAProcessedDatasetsDir(Dir):
 class PanDDAProcessedDatasetDir(Dir):
     def __init__(self, pathlike):
         super().__init__(pathlike)
+
+    @staticmethod
+    def from_path(path):
+        return PanDDAProcessedDatasetDir(path)
 
 
 class PanDDAAnalysesDir(Dir):
