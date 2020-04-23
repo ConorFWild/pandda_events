@@ -33,7 +33,7 @@ def get_pandda_events(pandda_fs_model: pandda_event_types.PanDDAFSModel):
         dtag = pandda_event_types.PanDDADtag(row["dtag"])
         event_idx = pandda_event_types.PanDDAEventIdx(row["event_idx"])
         event_id = pandda_event_types.PanDDAEventID(dtag, event_idx)
-        events[event_id] = pandda_event_types.Event.from_record(row)
+        events[event_id] = pandda_event_types.Event.from_record(row, pandda_fs_model)
 
     return events
 
