@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-import types
+import pandda_event_types
 
 
 def execute(command):
@@ -15,31 +15,31 @@ def execute(command):
     return stdout, stderr
 
 
-def get_event_rscc(event: types.Event):
-    command = types.GetPanDDAEventRSCCCommand.from_event(event)
+def get_event_rscc(event: pandda_event_types.Event):
+    command = pandda_event_types.GetPanDDAEventRSCCCommand.from_event(event)
 
     stdout, stderr = execute(command)
 
-    rscc = types.RSCC.from_phenix_stdout(stdout)
+    rscc = pandda_event_types.RSCC.from_phenix_stdout(stdout)
 
     return rscc
 
 
-def get_pandda_events(pandda_fs_model: types.PanDDAFSModel):
-    pandda_events_table = types.PanDDAEventTable(pandda_fs_model.analyses_dir.pandda_event_table_path)
+def get_pandda_events(pandda_fs_model: pandda_event_types.PanDDAFSModel):
+    pandda_events_table = pandda_event_types.PanDDAEventTable(pandda_fs_model.analyses_dir.pandda_event_table_path)
 
     events = {}
     for index, row in pandda_events_table.iterrows():
-        dtag = types.PanDDADtag(row["dtag"])
-        event_idx = types.PanDDAEventIdx(row["event_idx"])
-        event_id = types.PanDDAEventID(dtag, event_idx)
-        events[event_id] = types.Event.from_record(row)
+        dtag = pandda_event_types.PanDDADtag(row["dtag"])
+        event_idx = pandda_event_types.PanDDAEventIdx(row["event_idx"])
+        event_id = pandda_event_types.PanDDAEventID(dtag, event_idx)
+        events[event_id] = pandda_event_types.Event.from_record(row)
 
     return events
 
 
 def get_rscc_table_from_pandda_dir(pandda_dir: Path):
-    pandda_fs_model = types.PanDDAFSModel.from_path(pandda_dir)
+    pandda_fs_model = pandda_event_types.PanDDAFSModel.from_path(pandda_dir)
 
     events = get_pandda_events(pandda_fs_model)
 
@@ -48,7 +48,7 @@ def get_rscc_table_from_pandda_dir(pandda_dir: Path):
         rscc = get_event_rscc(event)
         rsccs[event_id] = rscc
 
-    rscc_table = types.RSCCTable.from_rsccs(rsccs)
+    rscc_table = pandda_event_types.RSCCTable.from_rsccs(rsccs)
 
     return rscc_table
 
