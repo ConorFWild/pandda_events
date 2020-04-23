@@ -62,6 +62,7 @@ class PanDDAProcessedDatasetDir(Dir):
 class PanDDAAnalysesDir(Dir):
     def __init__(self, pathlike):
         super().__init__(pathlike)
+        self.pandda_event_table_path = PanDDAEventTablePath(pathlike / "pandda_inspect_events.csv")
 
     @staticmethod
     def from_pandda_dir(pandda_dir: PanDDADir):
@@ -69,8 +70,10 @@ class PanDDAAnalysesDir(Dir):
 
 
 class PanDDAEventTablePath(File):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
+
+
 
 
 class PanDDAFSModel:
