@@ -48,7 +48,7 @@ class PanDDAProcessedDatasetsDir(Dir):
     def from_pandda_dir(pandda_dir: PanDDADir):
         return PanDDAProcessedDatasetsDir(pandda_dir / "processed_datasets")
 
-class PanDDAModelledStucturesDir(dir):
+class PanDDAModelledStucturesDir(Dir):
     def __init__(self, pathlike):
         super().__init__(pathlike)
 
