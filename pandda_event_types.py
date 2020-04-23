@@ -8,7 +8,8 @@ class Dir(type(Path())):
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls, *args, **kwargs)
 
-    def __init__(self):
+    def __init__(self, pathlike):
+        print(type(super()))
         super().__init__()
     # pass
 
