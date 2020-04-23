@@ -45,6 +45,10 @@ class PanDDAProcessedDatasetsDir(Dir):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    @staticmethod
+    def from_pandda_dir(pandda_dir: PanDDADir):
+        return PanDDAProcessedDatasetsDir(pandda_dir / "processed_datasets")
+
 
 class PanDDAProcessedDatasetDir(Dir):
     def __init__(self, pathlike):
