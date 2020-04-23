@@ -39,6 +39,7 @@ def get_pandda_events(pandda_fs_model: pandda_event_types.PanDDAFSModel):
 
 
 def get_rscc_table_from_pandda_dir(pandda_dir: Path):
+    print("PanDDA dir; {}".format(pandda_dir))
     pandda_fs_model = pandda_event_types.PanDDAFSModel.from_path(pandda_dir)
 
     events = get_pandda_events(pandda_fs_model)
