@@ -70,7 +70,8 @@ class PanDDAFSModel:
 
     @staticmethod
     def from_path(path: Path):
-        return PanDDAFSModel(PanDDADir(path))
+        pandda_dir = PanDDADir(path)
+        return PanDDAFSModel(pandda_dir)
 
     @staticmethod
     def from_string(string: str):
