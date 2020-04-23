@@ -210,3 +210,8 @@ class RSCCTable(pd.DataFrame):
 class PanDDAEventTable(pd.DataFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def from_pandda_event_table_path(path: PanDDAEventTablePath):
+        table = pd.read_csb(str(path))
+        return PanDDAEventTable(table)
