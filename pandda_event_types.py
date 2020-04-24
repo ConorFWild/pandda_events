@@ -90,7 +90,6 @@ class PanDDAProcessedDatasetDir(Dir):
 
         model_path = PanDDAModelPath(path / "{}-pandda-input.pdb".format(dtag))
 
-
         return PanDDAProcessedDatasetDir(path,
                                          modelled_structures_dir,
                                          event_maps,
@@ -245,8 +244,15 @@ class GetPanDDAEventRSCCCommand(Command):
 
 
 class RSCCTable(pd.DataFrame):
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @property
+    def _constructor(self):
+        def _c(*args, **kwargs):
+            return RSCCTable(*args, **kwargs).__finalize(self)
+
+        return _c
 
     @staticmethod
     def from_rsccs(rsccs):
@@ -258,6 +264,7 @@ class RSCCTable(pd.DataFrame):
             record["rscc"] = rscc
             records.append(records)
         return RSCCTable(records)
+
 
 class PanDDAEventModel(PDBFile):
     def __init__(self, pathlike):
