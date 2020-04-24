@@ -8,7 +8,7 @@ import joblib
 
 def map_parallel(f, iterable):
     results = joblib.Parallel(n_jobs=20,
-                              verbosity=50)(joblib.delayed(f)(i)
+                              verbose=50)(joblib.delayed(f)(i)
                                             for i
                                             in iterable)
 
