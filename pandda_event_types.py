@@ -173,7 +173,7 @@ class Event:
 
         model_path = event_dir.model_path
         print(event_dir.event_maps)
-        event_map_path = event_dir.event_maps[event_idx]
+        event_map_path = event_dir.event_maps[str(event_idx)]
 
         return Event(dtag,
                      event_idx,
