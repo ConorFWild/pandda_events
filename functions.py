@@ -146,7 +146,7 @@ def make_event_models(events, pandda_fs_model):
         print(pandda_fs_model.processed_datasets_dirs)
         print("processed dataset dir: {}".format(pandda_fs_model.processed_datasets_dirs[event.dtag]))
 
-        event_model_path = pandda_fs_model.processed_datasets_dir[event.dtag].modelled_structures_dir / "{}.pdb".format(
+        event_model_path = pandda_fs_model.processed_datasets_dirs[event.dtag].modelled_structures_dir / "{}.pdb".format(
                 event.event_idx)
 
         closest_lig.to_pdb(str(event_model_path))
