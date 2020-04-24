@@ -245,8 +245,8 @@ class GetPanDDAEventRSCCCommand(Command):
 
 
 class RSCCTable(pd.DataFrame):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
 
     @staticmethod
     def from_rsccs(rsccs):
