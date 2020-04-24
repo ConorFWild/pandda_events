@@ -12,7 +12,10 @@ def execute(command):
                             )
     stdout, stderr = proc.communicate()
 
-    return stdout, stderr
+    print(stdout)
+    print(stderr)
+
+    return str(stdout), str(stderr)
 
 
 def get_event_rscc(event: pandda_event_types.Event):
