@@ -261,7 +261,7 @@ class RSCCTable(pd.DataFrame):
     @property
     def _constructor(self):
         def _c(*args, **kwargs):
-            return RSCCTable(*args, **kwargs).__finalize(self)
+            return RSCCTable(*args, **kwargs).__finalize__(self)
 
         return _c
 
