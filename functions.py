@@ -51,9 +51,11 @@ def get_rscc_table_from_pandda_dir(pandda_dir: Path):
 
     rsccs = {}
     for event_id, event in events.items():
-        if event.event_model is not None:
+        if event.event_model_path.exists():
             rscc = get_event_rscc(event)
             rsccs[event_id] = rscc
+        else:
+            print("\tCould not find path! No such file: {}".format(event.event_model_path))
 
     rscc_table = pandda_event_types.RSCCTable.from_rsccs(rsccs)
 
