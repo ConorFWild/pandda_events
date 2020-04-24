@@ -131,10 +131,14 @@ def get_closest_lig(event):
                                     )
     closest_residue_table = residue_tables[closest_residue_table_key]
 
-    ppdb = PandasPdb()
-    ppdb.df["HETATM"] = closest_residue_table
+    # ppdb = PandasPdb()
+    # ppdb.df["HETATM"] = closest_residue_table
+    event_model.df["ATOM"].drop(event_model.df["ATOM"].index,
+                                inplace=True,
+                                )
+    event_model.df["HETATM"] = closest_residue_table
 
-    return ppdb
+    return event_model
 
 
 def make_event_models(events, pandda_fs_model):
