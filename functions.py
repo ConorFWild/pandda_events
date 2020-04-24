@@ -140,9 +140,14 @@ def make_event_models(events, pandda_fs_model):
     for event_id, event in events.items():
         closest_lig = get_closest_lig(event)
 
-        closest_lig.to_pdb(str(
-            pandda_fs_model.processed_datasets_dir[event.dtag].modelled_structures_dir / "{}.pdb".format(
-                event.event_idx)))
+        print(closest_lig)
+        print(closest_lig.df["HETATM"])
+        print(pandda_fs_model.processed_datasets_dir[event.dtag])
+
+        event_model_path = pandda_fs_model.processed_datasets_dir[event.dtag].modelled_structures_dir / "{}.pdb".format(
+                event.event_idx)
+
+        closest_lig.to_pdb(str(event_model_path))
 
 
 def get_rscc_table_from_pandda_dir(pandda_dir: Path):
