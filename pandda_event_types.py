@@ -265,7 +265,7 @@ class RSCCTable(pd.DataFrame):
             records.append(records)
 
         print(records)
-        return RSCCTable(records)
+        return pd.DataFrame(records)
 
 
 class PanDDAEventModel(PDBFile):
