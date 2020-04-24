@@ -210,7 +210,7 @@ class RSCC(float):
 
     @staticmethod
     def from_phenix_stdout(stdout: str):
-        rscc_regex = "LIG[\s]+[^\s]+[\s]+[^\s]+[\s]+[^\s]+[\s]+([\s]+)"
+        rscc_regex = "LIG[\s]+[^\s]+[\s]+[^\s]+[\s]+[^\s]+[\s]+([^\s]+)"
 
         matches = re.findall(rscc_regex,
                              stdout,
