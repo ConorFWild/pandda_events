@@ -16,6 +16,7 @@ def get_args():
 def main():
     args = get_args()
     rscc_table = get_rscc_table_from_pandda_dir(Path(args.pandda_dir))
+    print(rscc_table)
     rscc_table.to_csv(str(Path(args.rscc_table_path)))
 
 
