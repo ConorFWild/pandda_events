@@ -215,16 +215,21 @@ class RSCC(float):
 
     @staticmethod
     def from_phenix_stdout(stdout: str):
-        rscc_regex = "LIG[\s]+[^\s]+[\s]+[^\s]+[\s]+[^\s]+[\s]+([^\s]+)"
+        try:
+            rscc_regex = "LIG[\s]+[^\s]+[\s]+[^\s]+[\s]+[^\s]+[\s]+([^\s]+)"
 
-        matches = re.findall(rscc_regex,
-                             stdout,
-                             )
+            matches = re.findall(rscc_regex,
+                                 stdout,
+                                 )
 
-        rscc = float(matches[0])
+            rscc = float(matches[0])
 
-        return RSCC(rscc)
+            return RSCC(rscc)
 
+        except Exception as e:
+            print(e)
+            print("\tCouldn't get an rscc! Returning 0!")
+            return RSCC(0)
 
 class GetPanDDAEventRSCCCommand(Command):
     def __init__(self,
