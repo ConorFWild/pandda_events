@@ -51,8 +51,9 @@ def get_rscc_table_from_pandda_dir(pandda_dir: Path):
 
     rsccs = {}
     for event_id, event in events.items():
-        rscc = get_event_rscc(event)
-        rsccs[event_id] = rscc
+        if event.event_model is not None:
+            rscc = get_event_rscc(event)
+            rsccs[event_id] = rscc
 
     rscc_table = pandda_event_types.RSCCTable.from_rsccs(rsccs)
 

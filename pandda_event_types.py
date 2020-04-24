@@ -50,21 +50,29 @@ class PanDDAProcessedDatasetsDir(Dir):
 
 
 class PanDDAModelledStucturesDir(Dir):
-    def __init__(self, pathlike):
+    def __init__(self, pathlike, modelled_structure_path):
         super().__init__(pathlike)
+        self.modelled_structure_path = modelled_structure_path
+
+    @staticmethod
+    def from_dataset_dir(pathlike, dtag):
+        modelled_structure_path = PanDDAModelPath(pathlike / "{dtag}-pandda-model.pdb".format(dtag=dtag))
+        return PanDDAModelledStucturesDir(pathlike,
+                                          modelled_structure_path,
+                                          )
 
 
 class PanDDAProcessedDatasetDir(Dir):
-    def __init__(self, pathlike, modelled_structures, event_maps, model_path):
+    def __init__(self, pathlike, modelled_structures_dir, event_maps, model_path):
         super().__init__(pathlike)
-        self.modelled_structures = modelled_structures
+        self.modelled_structures_dir = modelled_structures_dir
         self.event_maps = event_maps
         self.model_path = model_path
 
     @staticmethod
     def from_path(path):
         dtag = path.name
-        modelled_structures = PanDDAModelledStucturesDir(path / "modelled_structures")
+        modelled_structures_dir = PanDDAModelledStucturesDir(path / "modelled_structures")
         event_map_paths = list(path.glob("{}-event*".format(dtag)))
         if len(event_map_paths) > 0:
             event_maps_dict = {re.findall("event_([0-9]+)_", str(evnet_map_path))[0]: evnet_map_path
@@ -80,7 +88,7 @@ class PanDDAProcessedDatasetDir(Dir):
         model_path = PanDDAModelPath(path / "{}-pandda-input.pdb".format(dtag))
 
         return PanDDAProcessedDatasetDir(path,
-                                         modelled_structures,
+                                         modelled_structures_dir,
                                          event_maps,
                                          model_path,
                                          )
@@ -155,13 +163,15 @@ class PanDDAEventMapPath(CCP4File):
 
 
 class Event:
-    def __init__(self, dtag, event_idx, event_dir, model_path, event_map_path):
+    def __init__(self, dtag, event_idx, event_dir, model_path, event_map_path, event_model_path):
         self.dtag = dtag
         self.event_idx = event_idx
 
         self.event_dir = event_dir
         self.model_path = model_path
         self.event_map_path = event_map_path
+
+        self.event_model_path = event_model_path
 
     @staticmethod
     def from_record(record, pandda_fs_model: PanDDAFSModel):
@@ -172,11 +182,14 @@ class Event:
         model_path = event_dir.model_path
         event_map_path = event_dir.event_maps[str(event_idx)]
 
+        event_model_path = event_dir.modelled_structures_dir.
+
         return Event(dtag,
                      event_idx,
                      event_dir,
                      model_path,
                      event_map_path,
+                     event_model_path,
                      )
 
 
@@ -224,7 +237,7 @@ class GetPanDDAEventRSCCCommand(Command):
 
     @staticmethod
     def from_event(event: Event):
-        return GetPanDDAEventRSCCCommand(event.model_path,
+        return GetPanDDAEventRSCCCommand(event.event_model_path,
                                          event.event_map_path,
                                          )
 
@@ -243,6 +256,14 @@ class RSCCTable(pd.DataFrame):
             record["rscc"] = rscc
             records.append(records)
         RSCCTable(records)
+
+class PanDDAEventModel(PDBFile):
+    def __init__(self, pathlike):
+        super().__init__(pathlike)
+
+    @staticmethod
+    def from_modelled_structures_dir(modelled_structures_dir, dtag):
+        return PanDDAEventModel(modelled_structures_dir / "{dtag}-pandda-model.pdb".format(dtag=dtag))
 
 
 class PanDDAEventTable(pd.DataFrame):
