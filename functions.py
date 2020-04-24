@@ -137,7 +137,7 @@ def get_closest_lig(event):
 
 
 def make_event_models(events, pandda_fs_model):
-    for event_id, event in events:
+    for event_id, event in events.items():
         closest_lig = get_closest_lig(event)
 
         closest_lig.to_pdb(str(
