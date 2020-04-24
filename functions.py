@@ -89,6 +89,7 @@ def get_rscc_table_from_pandda_dir(pandda_dir: Path):
     rsccs = map_seriel_dict(get_event_rscc,
                               events_to_process,
                               )
+    print(rsccs)
 
     rscc_table = pandda_event_types.RSCCTable.from_rsccs(rsccs)
 
