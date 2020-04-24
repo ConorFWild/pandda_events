@@ -52,7 +52,7 @@ class PanDDAProcessedDatasetsDir(Dir):
 class PanDDAModelledStucturesDir(Dir):
     def __init__(self, pathlike, modelled_structure_path):
         super().__init__(pathlike)
-        self.modelled_structure_path = modelled_structure_path
+        self.event_model_path = modelled_structure_path
 
     @staticmethod
     def from_dataset_dir(pathlike, dtag):
@@ -72,7 +72,9 @@ class PanDDAProcessedDatasetDir(Dir):
     @staticmethod
     def from_path(path):
         dtag = path.name
-        modelled_structures_dir = PanDDAModelledStucturesDir(path / "modelled_structures")
+        modelled_structures_dir = PanDDAModelledStucturesDir.from_dataset_dir(path / "modelled_structures",
+                                                                              dtag,
+                                                                              )
         event_map_paths = list(path.glob("{}-event*".format(dtag)))
         if len(event_map_paths) > 0:
             event_maps_dict = {re.findall("event_([0-9]+)_", str(evnet_map_path))[0]: evnet_map_path
@@ -182,7 +184,7 @@ class Event:
         model_path = event_dir.model_path
         event_map_path = event_dir.event_maps[str(event_idx)]
 
-        event_model_path = event_dir.modelled_structures_dir.
+        event_model_path = event_dir.modelled_structures_dir.event_model_path
 
         return Event(dtag,
                      event_idx,
