@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 
@@ -166,7 +167,7 @@ class PanDDAEventMapPath(CCP4File):
 
 
 class Event:
-    def __init__(self, dtag, event_idx, event_dir, model_path, event_map_path, event_model_path):
+    def __init__(self, dtag, event_idx, event_dir, model_path, event_map_path, event_model_path, coords):
         self.dtag = dtag
         self.event_idx = event_idx
 
@@ -175,6 +176,8 @@ class Event:
         self.event_map_path = event_map_path
 
         self.event_model_path = event_model_path
+
+        self.coords = coords
 
     @staticmethod
     def from_record(record, pandda_fs_model: PanDDAFSModel):
@@ -187,12 +190,15 @@ class Event:
 
         event_model_path = event_dir.modelled_structures_dir.event_model_path
 
+        coords = np.array([record["x"], record["y"], record["z"]])
+
         return Event(dtag,
                      event_idx,
                      event_dir,
                      model_path,
                      event_map_path,
                      event_model_path,
+                     coords,
                      )
 
 
@@ -238,7 +244,7 @@ class GetPanDDAEventRSCCCommand(Command):
 
     @staticmethod
     def from_event(event: Event):
-        return GetPanDDAEventRSCCCommand(event.event_model_path,
+        return GetPanDDAEventRSCCCommand(event.event_dir / "modelled_structures" / "{}.pdb".format(event.event_idx),
                                          event.event_map_path,
                                          )
 
