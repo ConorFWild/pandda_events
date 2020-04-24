@@ -198,6 +198,8 @@ class RSCC(float):
         matches = re.findall(rscc_regex,
                              stdout,
                              )
+        print("Matches!")
+        print(matches)
 
         rscc = float(matches[0])
 
