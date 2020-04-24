@@ -20,7 +20,7 @@ def map_parallel_dict(f, dictionary):
     values = list(dictionary.values())
 
     results_list = joblib.Parallel(n_jobs=20,
-                                   verbosity=50)(joblib.delayed(f)(v)
+                                   verbose=50)(joblib.delayed(f)(v)
                                                  for v
                                                  in values
                                                  )
