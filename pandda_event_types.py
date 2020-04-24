@@ -114,7 +114,7 @@ class PanDDAEventTablePath(File):
 
 class PanDDAFSModel:
     def __init__(self, pandda_dir: PanDDADir):
-        print("pandda dir: {}".format(pandda_dir))
+        # print("pandda dir: {}".format(pandda_dir))
         self.pandda_dir = pandda_dir
         self.analyses_dir = PanDDAAnalysesDir.from_pandda_dir(pandda_dir)
         self.processed_datasets_dir = PanDDAProcessedDatasetsDir.from_pandda_dir(pandda_dir)
@@ -264,7 +264,7 @@ class RSCCTable(pd.DataFrame):
             record["rscc"] = float(rscc)
             records.append(record)
 
-        print(records)
+        # print(records)
         return RSCCTable(records)
 
 
