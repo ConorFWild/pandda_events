@@ -263,6 +263,8 @@ class RSCCTable(pd.DataFrame):
             record["event_idx"] = event_id.event_idx
             record["rscc"] = rscc
             records.append(records)
+
+        print(records)
         return RSCCTable(records)
 
 
