@@ -142,6 +142,8 @@ def make_event_models(events, pandda_fs_model):
 
         print(closest_lig)
         print(closest_lig.df["HETATM"])
+        print(pandda_fs_model)
+        print(pandda_fs_model.processed_datasets_dir)
         print(pandda_fs_model.processed_datasets_dir[event.dtag])
 
         event_model_path = pandda_fs_model.processed_datasets_dir[event.dtag].modelled_structures_dir / "{}.pdb".format(
