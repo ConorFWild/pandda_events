@@ -172,6 +172,7 @@ class Event:
         event_dir = pandda_fs_model.processed_datasets_dirs[dtag]
 
         model_path = event_dir.model_path
+        print(event_dir.event_maps)
         event_map_path = event_dir.event_maps[event_idx]
 
         return Event(dtag,
