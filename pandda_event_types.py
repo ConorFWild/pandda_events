@@ -259,13 +259,13 @@ class RSCCTable(pd.DataFrame):
         records = []
         for event_id, rscc in rsccs.items():
             record = {}
-            record["dtag"] = event_id.dtag
-            record["event_idx"] = event_id.event_idx
-            record["rscc"] = rscc
-            records.append(records)
+            record["dtag"] = str(event_id.dtag)
+            record["event_idx"] = int(event_id.event_idx)
+            record["rscc"] = float(rscc)
+            records.append(record)
 
         print(records)
-        return pd.DataFrame(records)
+        return RSCCTable(records)
 
 
 class PanDDAEventModel(PDBFile):
