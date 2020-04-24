@@ -45,6 +45,7 @@ def map_parallel_dict(f, dictionary):
 
 
 def execute(command):
+    print(str(command))
     proc = subprocess.Popen(str(command),
                             shell=True,
                             stdout=subprocess.PIPE,
