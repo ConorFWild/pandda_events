@@ -14,6 +14,14 @@ def map_parallel(f, iterable):
 
     return results
 
+def map_seriel_dict(f, dictionary):
+    keys = list(dictionary.keys())
+    values = list(dictionary.values())
+
+    results = {key: f(value) for key, value in zip(keys, values)}
+
+    return results
+
 
 def map_parallel_dict(f, dictionary):
     keys = list(dictionary.keys())
@@ -81,7 +89,7 @@ def get_rscc_table_from_pandda_dir(pandda_dir: Path):
         else:
             print("\tCould not find path! No such file: {}".format(event.event_model_path))
 
-    rsccs = map_parallel_dict(get_event_rscc,
+    rsccs = map_seriel_dict(get_event_rscc,
                               events_to_process,
                               )
 
