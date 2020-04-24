@@ -5,6 +5,8 @@ import pandda_event_types
 
 
 def execute(command):
+
+    print(str(command))
     proc = subprocess.Popen(str(command),
                             shell=True,
                             stdout=subprocess.PIPE,
