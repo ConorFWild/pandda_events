@@ -48,6 +48,7 @@ class PanDDAProcessedDatasetsDir(Dir):
     def from_pandda_dir(pandda_dir: PanDDADir):
         return PanDDAProcessedDatasetsDir(pandda_dir / "processed_datasets")
 
+
 class PanDDAModelledStucturesDir(Dir):
     def __init__(self, pathlike):
         super().__init__(pathlike)
@@ -79,7 +80,6 @@ class PanDDAProcessedDatasetDir(Dir):
         else:
             event_maps = {}
         model_path = PanDDAModelPath(path / "{}-pandda-input.pdb".format(dtag))
-
 
         return PanDDAProcessedDatasetDir(path,
                                          modelled_structures,

@@ -34,7 +34,7 @@ def get_pandda_events(pandda_fs_model: pandda_event_types.PanDDAFSModel):
         event_idx = pandda_event_types.PanDDAEventIdx(row["event_idx"])
         event_id = pandda_event_types.PanDDAEventID(dtag, event_idx)
         print(pandda_fs_model.processed_datasets_dirs[dtag])
-        print(pandda_fs_model.processed_datasets_dirs[dtag].event_map_paths)
+        print(pandda_fs_model.processed_datasets_dirs[dtag].event_maps)
 
         print(row)
         events[event_id] = pandda_event_types.Event.from_record(row, pandda_fs_model)
