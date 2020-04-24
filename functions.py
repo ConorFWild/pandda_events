@@ -46,9 +46,6 @@ def execute(command):
                             )
     stdout, stderr = proc.communicate()
 
-    print(stdout)
-    print(stderr)
-
     return str(stdout), str(stderr)
 
 
