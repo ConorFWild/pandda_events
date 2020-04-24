@@ -257,7 +257,7 @@ class RSCCTable(pd.DataFrame):
             record["event_idx"] = event_id.event_idx
             record["rscc"] = rscc
             records.append(records)
-        RSCCTable(records)
+        return RSCCTable(records)
 
 class PanDDAEventModel(PDBFile):
     def __init__(self, pathlike):
