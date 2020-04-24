@@ -67,12 +67,10 @@ class PanDDAProcessedDatasetDir(Dir):
         modelled_structures = PanDDAModelledStucturesDir(path / "modelled_structures")
         event_map_paths = list(path.glob("{}-event*".format(dtag)))
         if len(event_map_paths) > 0:
-            print(event_map_paths)
             event_maps_dict = {re.findall("event_([0-9]+)_", str(evnet_map_path))[0]: evnet_map_path
                                for evnet_map_path
                                in event_map_paths
                                }
-            print(event_maps_dict)
             event_maps = {event_idx: PanDDAEventMapPath(event_map_path)
                           for event_idx, event_map_path
                           in event_maps_dict.items()
@@ -172,7 +170,6 @@ class Event:
         event_dir = pandda_fs_model.processed_datasets_dirs[dtag]
 
         model_path = event_dir.model_path
-        print(event_dir.event_maps)
         event_map_path = event_dir.event_maps[str(event_idx)]
 
         return Event(dtag,
